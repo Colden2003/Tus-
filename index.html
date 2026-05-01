@@ -3,346 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TusСеть | Evolution</title>
-    <style>
-        :root {
-            --primary: #4f46e5;
-            --primary-hover: #4338ca;
-            --bg: #0f172a;
-            --card: rgba(30, 41, 59, 0.7);
-            --text: #f8fafc;
-            --text-dim: #94a3b8;
-            --header: rgba(15, 23, 42, 0.8);
-            --accent: #0ea5e9;
-        }
- 
-        .light-theme {
-            --bg: #f1f5f9;
-            --card: rgba(255, 255, 255, 0.9);
-            --text: #1e293b;
-            --text-dim: #64748b;
-            --header: rgba(255, 255, 255, 0.8);
-        }
- 
-        body { 
-            font-family: 'Inter', system-ui, sans-serif; 
-            background: var(--bg); color: var(--text); margin: 0; padding-top: 70px;
-            transition: background 0.5s ease;
-            background-image: radial-gradient(circle at top right, rgba(79, 70, 229, 0.1), transparent),
-                              radial-gradient(circle at bottom left, rgba(14, 165, 233, 0.1), transparent);
-            background-attachment: fixed;
-            min-height: 100vh;
-        }
- 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
- 
-        .animate-up { animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
- 
-        header {
-            position: fixed; top: 0; left: 0; width: 100%; height: 64px;
-            background: var(--header); backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 0 24px; box-sizing: border-box; z-index: 1000;
-        }
- 
-        .logo { font-size: 25px; font-weight: 800; background: linear-gradient(to right, #818cf8, #38bdf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; cursor: pointer; }
- 
-        .top-profile-ava {
-            width: 40px; height: 40px; border-radius: 12px; background: var(--primary);
-            cursor: pointer; display: flex; align-items: center; justify-content: center;
-            font-size: 20px; border: 2px solid rgba(255,255,255,0.1); transition: 0.3s;
-        }
- 
-        .sidebar {
-            position: fixed; top: 0; left: -300px; width: 280px; height: 100%;
-            background: var(--card); backdrop-filter: blur(20px); z-index: 1001; 
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 30px; box-sizing: border-box; border-right: 1px solid rgba(255,255,255,0.1);
-        }
-        .sidebar.open { left: 0; }
- 
-        .nav-btn {
-            display: flex; align-items: center; gap: 15px; padding: 14px;
-            border-radius: 12px; cursor: pointer; font-weight: 500; margin-bottom: 8px; transition: 0.2s;
-        }
-        .nav-btn:hover { background: rgba(255,255,255,0.1); color: var(--accent); }
- 
-        .container { max-width: 650px; margin: 0 auto; padding: 20px; }
- 
-        .card { 
-            background: var(--card); backdrop-filter: blur(10px);
-            border-radius: 20px; padding: 24px; margin-bottom: 20px; 
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.3);
-        }
- 
-        .p-banner { height: 140px; border-radius: 16px; background: var(--primary); transition: 0.3s; }
-        .p-avatar-main {
-            width: 100px; height: 100px; border-radius: 25px; background: #1e293b;
-            border: 6px solid var(--bg); margin: -50px auto 15px;
-            display: flex; align-items: center; justify-content: center; font-size: 40px;
-        }
- 
-        textarea, input { 
-            width: 100%; background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.1); 
-            color: white; border-radius: 12px; padding: 12px; margin-top: 10px; outline: none; box-sizing: border-box;
-        }
- 
-        .btn { 
-            background: var(--primary); color: #fff; border: none; padding: 10px 20px; 
-            border-radius: 10px; font-weight: 600; cursor: pointer; transition: 0.2s;
-        }
-        .btn:hover { opacity: 0.9; transform: translateY(-1px); }
- 
-        /* LIKE & COMMENT STYLES */
-        .post-actions { display: flex; gap: 20px; margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 10px; }
-        .action-item { cursor: pointer; display: flex; align-items: center; gap: 6px; color: var(--text-dim); transition: 0.2s; font-size: 14px; }
-        .action-item:hover { color: var(--accent); }
-        .action-item.liked { color: #ef4444; }
-        
-        .comments-section { margin-top: 15px; display: none; background: rgba(0,0,0,0.1); border-radius: 12px; padding: 10px; }
-        .comment { font-size: 13px; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 4px; }
-        .comment b { color: var(--accent); }
+    <title>Super Map Pro</title>
 
-        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 1000; display: none; }
-        .overlay.active { display: block; }
-        .hidden { display: none !important; }
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+    
+    <style>
+        body { margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        #map { height: 100vh; width: 100%; }
+
+        /* Панель поиска */
+        .search-panel {
+            position: absolute;
+            top: 15px;
+            left: 60px;
+            z-index: 1000;
+            background: white;
+            padding: 10px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            display: flex;
+            gap: 8px;
+        }
         
-        #auth-screen { position: fixed; inset: 0; background: var(--bg); z-index: 9999; display: flex; align-items: center; justify-content: center; }
+        input { padding: 10px; border: 1px solid #ddd; border-radius: 6px; width: 220px; outline: none; }
+        button { padding: 10px 15px; background: #007bff; color: white; border: none; border-radius: 6px; cursor: pointer; transition: 0.3s; }
+        button:hover { background: #0056b3; }
+        
+        .geo-btn { background: #28a745; } /* Кнопка геолокации */
+
+        /* Стили для маршрутной панели (делаем её компактнее) */
+        .leaflet-routing-container {
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            max-height: 300px !important;
+            overflow-y: auto;
+        }
     </style>
 </head>
-<body class="dark-theme">
- 
-    <div id="auth-screen">
-        <div class="card animate-up" style="width: 350px; text-align: center;">
-            <div class="logo" style="font-size: 32px; margin-bottom: 20px;">TusСеть</div>
-            <input type="text" id="auth-login" placeholder="Придумайте ник">
-            <input type="password" id="auth-pass" placeholder="Пароль">
-            <button class="btn" style="width: 100%; margin-top: 20px;" onclick="handleAuth()">Войти</button>
-        </div>
-    </div>
- 
-    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
- 
-    <header id="main-header" class="hidden">
-        <div onclick="toggleMenu()" style="cursor:pointer; font-size: 24px;">☰</div>
-        <div class="logo" onclick="showPage('feed')">TusСеть</div>
-        <div class="top-profile-ava" id="top-ava" onclick="showPage('profile')">👤</div>
-    </header>
- 
-    <div class="sidebar" id="sidebar">
-        <div class="logo" style="margin-bottom: 30px;">Меню</div>
-        <div class="nav-btn" onclick="showPage('feed')">🏠 Лента</div>
-        <div class="nav-btn" 
-        <div class="nav-btn" onclick="showPage('friends')">👥 Друзья</div>
-        <div class="nav-btn" onclick="showPage('premium')">💎 Подписки</div>
-        
-        <div style="margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
-            <button class="btn" style="width:100%; background: rgba(255,255,255,0.1);" onclick="toggleFeedSettings()">Настройки вида</button>
-            <div id="feed-settings" class="hidden" style="margin-top:10px;">
-                <button class="btn" style="width: 100%; font-size: 12px;" onclick="document.body.classList.toggle('light-theme')">Сменить тему</button>
-            </div>
-        </div>
+<body>
 
-        <div class="nav-btn" style="color: #ef4444; margin-top: auto;" onclick="handleLogout()">🚪 Выйти</div>
+    <div class="search-panel">
+        <input type="text" id="address" placeholder="Найти место...">
+        <button onclick="searchPlace()">Найти</button>
+        <button class="geo-btn" onclick="locateMe()">📍 Где я?</button>
     </div>
- 
-    <div class="container hidden" id="main-app">
-        
-        <section id="page-feed" class="animate-up">
-            <div class="card">
-                <h2 style="margin-top:0;">Лента новостей</h2>
-                <div id="global-posts">
-                    <p style="color: var(--text-dim);">Пока здесь пусто...</p>
-                </div>
-            </div>
-        </section>
- 
-        <section id="page-profile" class="hidden animate-up">
-            <div class="card" style="padding:0; overflow:hidden;">
-                <div class="p-banner" id="p-banner-img"></div>
-                <div style="padding: 24px; text-align: center;">
-                    <div class="p-avatar-main" id="p-avatar">👤</div>
-                    <h2 id="p-name" style="margin:0; font-size: 24px;">Пользователь</h2>
-                    <p id="p-status" style="color: var(--text-dim); margin:8px 0;">Статус не установлен</p>
-                    <button class="btn" style="background: rgba(255,255,255,0.1);" onclick="toggleProfileSettings()">⚙</button>
-                </div>
-            </div>
- 
-            <div id="profile-settings" class="card hidden">
-                <h3>Настройки</h3>
-                <input type="text" id="set-name" placeholder="Имя">
-                <input type="text" id="set-status" placeholder="Статус">
-                <input type="text" id="set-emoji" placeholder="Эмодзи (напр. 😎)">
-                <input type="text" id="set-banner" placeholder="Цвет баннера (HEX код)">
-                <button class="btn" style="margin-top: 15px; width: 100%;" onclick="saveProfile()">Сохранить</button>
-            </div>
- 
-            <div class="card">
-                <textarea id="post-text" placeholder="Что у вас нового?" rows="3"></textarea>
-                <div id="preview-container"></div>
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
-                    <label style="cursor: pointer; color: var(--accent); font-size: 14px;">🖼️ Фото <input type="file" hidden onchange="handleFiles(this)"></label>
-                    <button class="btn" onclick="publishPost()">Опубликовать</button>
-                </div>
-            </div>
- 
-            <div id="my-posts"></div>
-        </section>
- 
-        <section id="page-friends" class="hidden animate-up">
-            <div class="card"><h2>Друзья</h2><p>У вас пока нет добавленных друзей.</p></div>
-        </section>
- 
-        <section id="page-premium" class="hidden animate-up">
-            <div class="card" style="background: linear-gradient(135deg, #ffd700, #ff8c00); color: black;">
-                <h2>Premium</h2>
-                <p>Эксклюзивные функции скоро появятся!</p>
-            </div>
-        </section>
-    </div>
- 
+
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+
     <script>
-        let currentUser = { name: "Алексей", status: "Живу в TusСети", emoji: "👤", banner: "#4f46e5" };
-        let attachedFile = null;
+        // Инициализация
+        const map = L.map('map').setView([55.7558, 37.6173], 13);
+        let userLocation = null;
+        let routeControl = null;
 
-        // Авторизация
-        function handleAuth() {
-            const login = document.getElementById('auth-login').value;
-            if (login.trim() !== "") {
-                currentUser.name = login;
-                document.getElementById('auth-screen').classList.add('hidden');
-                document.getElementById('main-header').classList.remove('hidden');
-                document.getElementById('main-app').classList.remove('hidden');
-                updateProfileUI();
-            } else {
-                alert("Введите имя!");
-            }
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap'
+        }).addTo(map);
+
+        // --- 1. ФУНКЦИЯ ГЕОЛОКАЦИИ ---
+        function locateMe() {
+            map.locate({setView: true, maxZoom: 16});
         }
 
-        // Выход
-        function handleLogout() {
-            if(confirm("Вы уверены, что хотите выйти?")) {
-                document.getElementById('auth-screen').classList.remove('hidden');
-                document.getElementById('main-header').classList.add('hidden');
-                document.getElementById('main-app').classList.add('hidden');
-                document.getElementById('auth-login').value = "";
-                document.getElementById('auth-pass').value = "";
-                if(document.getElementById('sidebar').classList.contains('open')) toggleMenu();
-            }
-        }
- 
-        function toggleMenu() {
-            document.getElementById('sidebar').classList.toggle('open');
-            document.getElementById('overlay').classList.toggle('active');
-        }
- 
-        function showPage(id) {
-            ['feed', 'profile', 'friends', 'premium'].forEach(p => {
-                document.getElementById('page-'+p).classList.add('hidden');
-            });
-            document.getElementById('page-'+id).classList.remove('hidden');
-            if(window.innerWidth < 800 && document.getElementById('sidebar').classList.contains('open')) toggleMenu();
-        }
- 
-        function toggleFeedSettings() { document.getElementById('feed-settings').classList.toggle('hidden'); }
-        function toggleProfileSettings() { document.getElementById('profile-settings').classList.toggle('hidden'); }
- 
-        function handleFiles(input) {
-            const file = input.files[0];
-            if (!file) return;
-            attachedFile = URL.createObjectURL(file);
-            document.getElementById('preview-container').innerHTML = `<img src="${attachedFile}" style="width:100px; border-radius:12px; margin-top:10px; border: 1px solid var(--accent)">`;
-        }
- 
-        // Постинг
-        function publishPost() {
-            const text = document.getElementById('post-text').value;
-            if (!text && !attachedFile) return;
- 
-            const postId = Date.now();
-            const mediaHtml = attachedFile ? `<img src="${attachedFile}" style="width:100%; border-radius:14px; margin-top:15px;">` : '';
+        map.on('locationfound', function(e) {
+            userLocation = e.latlng;
+            L.marker(e.latlng).addTo(map)
+                .bindPopup("Вы здесь!").openPopup();
             
-            const postHtml = `
-                <div class="card animate-up" id="post-${postId}">
-                    <div style="display:flex; gap:12px; align-items:center;">
-                        <div style="width:36px; height:36px; border-radius:10px; background:var(--primary); display:flex; align-items:center; justify-content:center;">${currentUser.emoji}</div>
-                        <div>
-                            <div style="font-weight:bold; font-size:14px;">${currentUser.name}</div>
-                            <div style="color:var(--text-dim); font-size:11px;">сейчас</div>
-                        </div>
-                    </div>
-                    <div style="margin-top:15px; line-height:1.6;">${text}</div>
-                    ${mediaHtml}
-                    
-                    <div class="post-actions">
-                        <div class="action-item" onclick="toggleLike(this)">❤️ <span>0</span></div>
-                        <div class="action-item" onclick="toggleComments('${postId}')">💬 Комментировать</div>
-                    </div>
+            // Добавляем синий круг точности
+            L.circle(e.latlng, e.accuracy).addTo(map);
+        });
 
-                    <div id="comments-${postId}" class="comments-section">
-                        <div class="comment-list"></div>
-                        <div style="display:flex; gap:5px; margin-top:10px;">
-                            <input type="text" placeholder="Напишите комментарий..." style="margin:0; font-size:12px;">
-                            <button class="btn" style="padding: 5px 10px;" onclick="addComment(this)">></button>
-                        </div>
-                    </div>
+        map.on('locationerror', function() {
+            alert("Не удалось получить доступ к геопозиции.");
+        });
+
+
+        // --- 2. ФУНКЦИЯ МАРШРУТОВ ---
+        function createRoute(destLatLng) {
+            if (!userLocation) {
+                alert("Сначала нажмите 'Где я?', чтобы мы знали точку старта.");
+                return;
+            }
+
+            // Удаляем старый маршрут, если он есть
+            if (routeControl) {
+                map.removeControl(routeControl);
+            }
+
+            routeControl = L.Routing.control({
+                waypoints: [
+                    L.latLng(userLocation.lat, userLocation.lng), // Старт
+                    L.latLng(destLatLng.lat, destLatLng.lng) // Финиш
+                ],
+                routeWhileDragging: true,
+                language: 'ru',
+                createMarker: function() { return null; } // Не плодить лишние маркеры
+            }).addTo(map);
+        }
+
+
+        // --- 3. ИНТЕРАКТИВНОСТЬ И КЛИКИ ---
+        // Клик по карте — ставим временный маркер и предлагаем маршрут
+        map.on('click', function(e) {
+            const popupContent = `
+                <div>
+                    <b>Координаты:</b> ${e.latlng.lat.toFixed(4)}, ${e.latlng.lng.toFixed(4)}<br>
+                    <button onclick="createRoute({lat: ${e.latlng.lat}, lng: ${e.latlng.lng}})" 
+                            style="margin-top:10px; cursor:pointer;">
+                        Сюда маршрут
+                    </button>
                 </div>
             `;
- 
-            document.getElementById('my-posts').insertAdjacentHTML('afterbegin', postHtml);
             
-            // Дублируем в общую ленту (демо-логика)
-            const feed = document.getElementById('global-posts');
-            if(feed.querySelector('p')) feed.innerHTML = "";
-            feed.insertAdjacentHTML('afterbegin', postHtml.replace(`id="post-${postId}"`, `id="feed-${postId}"`));
+            L.popup()
+                .setLatLng(e.latlng)
+                .setContent(popupContent)
+                .openOn(map);
+        });
 
-            // Очистка
-            document.getElementById('post-text').value = '';
-            document.getElementById('preview-container').innerHTML = '';
-            attachedFile = null;
-        }
 
-        // Лайки и комменты
-        function toggleLike(el) {
-            el.classList.toggle('liked');
-            let count = parseInt(el.querySelector('span').innerText);
-            el.querySelector('span').innerText = el.classList.contains('liked') ? count + 1 : count - 1;
-        }
+        // --- 4. ПОИСК (с автоматическим маркером) ---
+        async function searchPlace() {
+            const query = document.getElementById('address').value;
+            if (!query) return;
 
-        function toggleComments(id) {
-            const section = document.getElementById('comments-' + id);
-            section.style.display = section.style.display === 'block' ? 'none' : 'block';
-        }
+            const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}`);
+            const data = await response.json();
 
-        function addComment(btn) {
-            const input = btn.previousElementSibling;
-            if(!input.value.trim()) return;
-            const list = btn.closest('.comments-section').querySelector('.comment-list');
-            list.innerHTML += `<div class="comment"><b>${currentUser.name}:</b> ${input.value}</div>`;
-            input.value = "";
-        }
- 
-        function saveProfile() {
-            currentUser.name = document.getElementById('set-name').value || currentUser.name;
-            currentUser.status = document.getElementById('set-status').value || currentUser.status;
-            currentUser.emoji = document.getElementById('set-emoji').value || currentUser.emoji;
-            currentUser.banner = document.getElementById('set-banner').value || currentUser.banner;
-            
-            updateProfileUI();
-            toggleProfileSettings();
-        }
-
-        function updateProfileUI() {
-            document.getElementById('p-name').innerText = currentUser.name;
-            document.getElementById('p-status').innerText = currentUser.status;
-            document.getElementById('p-avatar').innerText = currentUser.emoji;
-            document.getElementById('top-ava').innerText = currentUser.emoji;
-            document.getElementById('p-banner-img').style.background = currentUser.banner;
+            if (data.length > 0) {
+                const { lat, lon, display_name } = data[0];
+                const target = L.latLng(lat, lon);
+                
+                map.setView(target, 16);
+                
+                L.marker(target).addTo(map)
+                    .bindPopup(`
+                        <b>${display_name}</b><br>
+                        <button onclick="createRoute({lat: ${lat}, lng: ${lon}})">Поехали!</button>
+                    `)
+                    .openPopup();
+            } else {
+                alert("Ничего не нашли :(");
+            }
         }
     </script>
 </body>
